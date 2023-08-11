@@ -34,9 +34,7 @@ class TaskQueue {
 
   template <typename Func>
   void ForcedPush(Func &&function) {
-    unique_lock<mutex> locker(mutex_, try_to_lock);
-    while (!locker) {
-    }
+    unique_lock<mutex> locker(mutex_);
     tasks_queue_.push(forward<Func>(function));
   }
 

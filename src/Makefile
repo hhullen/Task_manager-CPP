@@ -15,7 +15,7 @@ CPPCH_SETUP=--enable=all --suppress=missingInclude \
 			--suppress=unusedFunction -v --language=c++ $(STD)
 TO_DELETE_FILES=*.o *.out *.dSYM *.gch *.gcda *.gcno .DS_Store $(TEST_EXECUTABLE) \
 				$(CLANG_FILE) *.info
-TO_DELETE_FOLDERS=report a.out.dSYM $(LIB_NAME)
+TO_DELETE_FOLDERS=report a.out.dSYM $(LIB_NAME) *.dSYM
 
 #Crossplatform specs
 SEP='\'
@@ -55,13 +55,13 @@ check:
 	clang-format -n --style=Google $(CHECK_FILES)
 
 tests:
-	$(COMPILER) $(STD) $(CODE_DIAG_FLAGS) $(TESTBUILD_FILES) $(TEST_FLAGS) \
+	$(COMPILER) -g $(STD) $() $(TESTBUILD_FILES) $(TEST_FLAGS) \
 	-o $(TEST_EXECUTABLE)
 	.$(SEP)$(TEST_EXECUTABLE)
 
 gcov_report: clean gcov_build
-	lcov -t "test" -o test.info -c -d .
-	genhtml -o report test.info
+	lcov --ignore-errors mismatch -t "test" -o test.info -c -d .
+	genhtml --ignore-errors mismatch -o report test.info
 
 gcov_build:
 	$(COMPILER) $(STD) $(CODE_DIAG_FLAGS) \

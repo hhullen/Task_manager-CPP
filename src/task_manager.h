@@ -74,8 +74,7 @@ class TaskManager {
   }
 
   void operator=(const TaskManager &src) {
-    this->~TaskManager();
-    *this = src;
+    this->SetThreads(src.threads_amount_);
   }
 
  private:
