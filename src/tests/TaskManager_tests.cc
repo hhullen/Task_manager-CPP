@@ -7,7 +7,7 @@ using hhullen::TaskManager;
 class TESTER {
  public:
   void method(int var) {
-    for (int i = 0; i < 1000; ++i) {
+    for (int i = 0; i < var + 1000; ++i) {
     }
   }
 };

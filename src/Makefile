@@ -11,8 +11,7 @@ TEST_FLAGS=-lgtest -pthread -lgtest_main
 CLANG_FILE=.clang-format
 CLANG_FILE_WAY=..$(SEP)materials$(SEP)linters$(SEP)$(CLANG_FILE)
 CHECK_FILES=$(BUILD_FILES) taks_queue.h
-CPPCH_SETUP=--enable=all --suppress=missingInclude \
-			--suppress=unusedFunction -v --language=c++ $(STD)
+CPPCH_SETUP=--enable=all --suppress=missingInclude -v --language=c++ $(STD)
 TO_DELETE_FILES=*.o *.out *.dSYM *.gch *.gcda *.gcno .DS_Store $(TEST_EXECUTABLE) \
 				$(CLANG_FILE) *.info
 TO_DELETE_FOLDERS=report a.out.dSYM $(LIB_NAME) *.dSYM
@@ -55,7 +54,7 @@ check:
 	clang-format -n --style=Google $(CHECK_FILES)
 
 tests:
-	$(COMPILER) -g $(STD) $() $(TESTBUILD_FILES) $(TEST_FLAGS) \
+	$(COMPILER) -g $(STD) $(CODE_DIAG_FLAGS) $(TESTBUILD_FILES) $(TEST_FLAGS) \
 	-o $(TEST_EXECUTABLE)
 	.$(SEP)$(TEST_EXECUTABLE)
 
